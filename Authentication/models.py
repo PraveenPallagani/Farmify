@@ -10,7 +10,7 @@ class CustomUserManager(BaseUserManager):
         if password and len(password) < 4:
             raise ValueError('Password should contain atleast 4 charecters')
         # save the user to db
-        user = self.model(phone_number=phone_number, **extra_fields)
+        user = self.model(phone_number=phone_number,**extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -18,7 +18,7 @@ class CustomUserManager(BaseUserManager):
     def create_superuser(self, phone_number, password, **extra_fields):
         extra_fields.setdefault('is_staff',True)
         extra_fields.setdefault('is_superuser',True)
-        return self.create_user(phone_number=phone_number,password=password,extra_fields=extra_fields)
+        return self.create_user(phone_number=phone_number,password=password,**extra_fields)
     
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     # user properties

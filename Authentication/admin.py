@@ -16,12 +16,10 @@ class CustomUserAdmin(BaseUserAdmin):
     )
     
     def get_form(self, request, obj=None, **kwargs):
-        form = super().get_form(request,obj,kwargs)
+        form = super().get_form(request,obj,**kwargs)
         return form
     
     search_fields= ('phone_number', 'first_name', 'last_name')
-    filter_horizontal = ()
-    list_editable = ('is_active','is_staff')
 
 # Register your models here.
 admin.site.register(models.CustomUser,CustomUserAdmin)
