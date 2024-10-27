@@ -1,6 +1,6 @@
 from django.http import *
-from django.contrib.auth.decorators import login_required
+from Authentication.decorators import role_required
 
-@login_required
+@role_required('customer','farmer','admin')
 def home(request:HttpRequest):
     return HttpResponse(f"This is home page by {request.user}")
