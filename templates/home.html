@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <title>Home Page</title>
+  </head>
+  <body>
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+        </li>
+    {% endfor %}
+    <h5> {{user.first_name}} is logged in with role {{user.role}}</h5>
+  </body>
+</html>

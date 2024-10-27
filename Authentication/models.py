@@ -3,23 +3,22 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 # Create your models here.
 class CustomUserManager(BaseUserManager):
-    def create_user(self, phone_number, password, role='admin', **extra_fields):
+    def create_user(self, phone_number, password, first_name='', last_name='', role='admin', **extra_fields):
         # validations
         if not phone_number:
             raise ValueError("Phone number is required")
         if password and len(password) < 4:
             raise ValueError('Password should contain atleast 4 charecters')
         # save the user to db
-        extra_fields.setdefault('role',role)
-        user = self.model(phone_number=phone_number,**extra_fields)
+        user = self.model(phone_number=phone_number,first_name=first_name, last_name=last_name, role=role, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, phone_number, password, **extra_fields):
+    def create_superuser(self, phone_number, password, first_name='', last_name='', **extra_fields):
         extra_fields.setdefault('is_staff',True)
         extra_fields.setdefault('is_superuser',True)
-        return self.create_user(phone_number=phone_number,password=password, role='admin', **extra_fields)
+        return self.create_user(phone_number=phone_number,password=password, first_name=first_name, last_name=last_name, role='admin', **extra_fields)
     
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     # roles
