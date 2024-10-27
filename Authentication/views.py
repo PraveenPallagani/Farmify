@@ -24,5 +24,5 @@ def signIn(request:HttpRequest):
         else:
             messages.error(request, "Invalid phone number or password.")
     # serve the login page
-    return render(request=request,template_name='login.html')
+    return render(request=request,template_name='signin.html')
 

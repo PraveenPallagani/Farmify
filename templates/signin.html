@@ -8,6 +8,11 @@
 </head>
 <body>
     <div>
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{ message }}
+            </li>
+        {% endfor %}
         <div>
             <h2>Login</h2>
             <form method="post">
