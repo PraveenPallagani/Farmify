@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>SignUp</title>
 </head>
 <body>
     <div>
@@ -19,9 +19,18 @@
                 {% csrf_token %}
                 <label for="phone_number">Phone Number</label>
                 <input type='text' name="phone_number" placeholder="Enter Phone Nuber...." required/><br/>
+                <label for="first_name">First Name</label>
+                <input type='text' name="first_name" placeholder="Enter First Name...." required/><br/>
+                <label for="last_name">Last Name</label>
+                <input type='text' name="last_name" placeholder="Enter Last Name...." required/><br/>
+                <label for="role">Role</label>
+                <select name="role">
+                    <option value="customer">Customer</option>
+                    <option value="farmer">Farmer</option>
+                </select><br/>
                 <label for="password">Password</label>
                 <input type='password' name="password" placeholder="Enter Password...." required/><br/>
-                <input type='submit' value='Sign In'/>
+                <input type='submit' value='Sign Up'/>
             </form>
         </div>
     </div>
