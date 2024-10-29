@@ -31,7 +31,7 @@ def signUp(request:HttpRequest):
             messages.error(request, f'Exception while saving the user: {ex}')
 
     # serve the signup page
-    return render(request=request, template_name='signup.html')
+    return render(request=request, template_name='authentication/signup.html')
 
 
 
@@ -52,7 +52,7 @@ def signIn(request:HttpRequest):
         else:
             messages.error(request, "Invalid phone number or password.")
     # serve the signin page
-    return render(request=request,template_name='signin.html')
+    return render(request=request,template_name='authentication/signin.html')
 
 
 def signOut(request):
