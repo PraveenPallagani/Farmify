@@ -1,0 +1,24 @@
+{% extends "../base.html" %}
+
+{% block title %}
+    All Products
+{% endblock title %}
+
+{% block body %}
+    {% comment "All messages setion" %}{% endcomment %}
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+        </li>
+    {% endfor %}
+
+    {% comment "All Products" %}{% endcomment %}
+     <h3>All Products from {{user.first_name}}</h3>
+     <ul>
+    {% for product in products %}
+        <li>
+            <span>Product Name:</span> <a href="/farmer/product-details/{{product.id}}"><span>{{product.name}}</span></a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock body %}

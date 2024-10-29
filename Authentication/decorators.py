@@ -13,7 +13,7 @@ def role_required(*roles):
             
             if request.user.role not in roles:
                 messages.error(request, f"Only user with {roles} roles can access the '{request.get_full_path()}'")
-                return redirect('Home')  # Redirect to a home page
+                return redirect('SignIn')  # Redirect to a home page
             
             return view_func(request, *args, **kwargs)
         return _wrapped_view
