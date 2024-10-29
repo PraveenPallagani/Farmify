@@ -1,12 +1,9 @@
-<!-- templates/login.html -->
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SignUp</title>
-</head>
-<body>
+{% extends "../base.html" %}
+
+{% block title %}SignUp Page{% endblock title %}
+
+
+{% block body %}
     <div>
         {% for message in messages %}
             <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
@@ -34,5 +31,4 @@
             </form>
         </div>
     </div>
-</body>
-</html>
+{% endblock body %}
