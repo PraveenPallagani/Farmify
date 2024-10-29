@@ -1,0 +1,24 @@
+{% extends "../base.html" %}
+
+{% block title %}
+    Product Details
+{% endblock title %}
+
+{% block body %}
+    {% comment "All messages setion" %}{% endcomment %}
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+        </li>
+    {% endfor %}
+
+    {% comment "Product Details" %}{% endcomment %}
+    <h3>Product details of {{product.name}}</h3>
+    <div>
+        <span>Product Name:</span> <span>{{product.name}}</span><br/>
+        <span>Product Description:</span> <span>{{product.description}}</span><br/>
+        <span>Product Measuring Unit:</span> <span>{{product.measure_unit}}</span><br/>
+        <span>Product Quantity:</span> <span>{{product.quantity}}</span><br/>
+        <span>Product Price:</span> <span>{{product.price}}</span><br/>
+    </div>
+{% endblock body %}
