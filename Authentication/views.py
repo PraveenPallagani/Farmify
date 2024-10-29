@@ -7,7 +7,7 @@ from .models import CustomUser
 # Create your views here.
 def signUp(request:HttpRequest):
     # rediret to home if aleady authenticated
-    if request.user and request.user.is_authenticated:
+    if request.user and request.user.is_authenticated and request.user.role in ('farmer', 'customer'):
         return redirect('Home')
     # create the user and redirect to login page
     if request.method == 'POST':
@@ -37,7 +37,7 @@ def signUp(request:HttpRequest):
 
 def signIn(request:HttpRequest):
     # rediret to home if aleady authenticated
-    if request.user and request.user.is_authenticated:
+    if request.user and request.user.is_authenticated and request.user.role in ('farmer', 'customer'):
         return redirect("Home")
     # authenticate and login the user
     if request.method == 'POST':
