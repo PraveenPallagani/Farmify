@@ -11,3 +11,5 @@ urlpatterns = [
     path('customer/',include('Customer.urls')),
     path('farmer/',include('Farmer.urls'))
 ]
+
+handler404 = 'Farmify.views.handle_404'
