@@ -50,4 +50,14 @@ class Product(models.Model):
     
     class Meta:
         ordering = ['-created_at'] 
-    
+
+
+def upload_by_user(instance, filename):
+    return f'{instance.product.user.phone_number}/{filename}'
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to=upload_by_user)   
+
+    def __str__(self):
+        return f'Image {self.image} for {self.product.name}'
