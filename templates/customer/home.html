@@ -4,6 +4,11 @@
     Customer Home Page
 {% endblock title %}
 
+{% block style %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'customer/css/home.css' %}">
+{% endblock style %}
+
 {% block body %}
 <div>
     {% for message in messages %}
@@ -12,5 +17,28 @@
         </li>
     {% endfor %}
     <h3 class="text-blue-900 font-bold">Customer Home Page</h3>
+    <nav>   
+        <div>
+            {% for category in categories %}
+                <a href='/customer/home?category={{category}}'>
+                    <nav-item>{{category}}</nav-item>
+                </a>
+            {% endfor %}
+        <div>
+        <div>
+            <form method="post" action='/customer/home'>
+                {% csrf_token %}
+                <input type='text' name='search' placeholder='Enter search query....'/>
+                <input type='submit' value='Submit' />
+            </form>
+        </div>
+    </nav>
+    <div>
+        {% for product in products %}
+            <div>
+                {{product}}    
+            <div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock body %}
