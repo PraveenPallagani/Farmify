@@ -2,16 +2,15 @@
 <html lang="en">
   <head>
     <title>
-        {% block title %}
-            Base Title
-        {% endblock title %}
+        {% block title %}{% endblock title %}
+        
     </title>
+    {% block style %}{% endblock style %}
   </head>
   <body>
     <div>
-    {% block body %}
-        Base Body
-    {% endblock body %}
+    {% block body %}{% endblock body %}
     </div>
+    {% block js %}{% endblock js %}
   </body>
 </html>
