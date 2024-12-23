@@ -15,6 +15,9 @@
     {% comment "Product Details" %}{% endcomment %}
     <h3>Product details of {{product.name}}</h3>
     <div>
+        {% for image in product.images.all %}
+            <img src="{{ image.image.url }}" alt="{{ product.name }}" width="200">
+        {% endfor %}<br/>
         <span>Product Name:</span> <span>{{product.name}}</span><br/>
         <span>Product Description:</span> <span>{{product.description}}</span><br/>
         <span>Product Measuring Unit:</span> <span>{{product.measure_unit}}</span><br/>

@@ -14,7 +14,7 @@
 
     {% comment "Form to add product" %}{% endcomment %}
      <h3>Add Product Form .....</h3>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="product_name">Product Name</label>
         <input type='text' name="product_name" placeholder="Enter Product Name...." required/><br/>
@@ -39,7 +39,8 @@
 
         <label for="product_price">Product Price</label>
         <input type='number' name="product_price" min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" placeholder="Enter Product Price...." required/><br/>
-
+        <label for="images">Product Images (Max 5):</label>
+        <input type="file" name="images" accept=".png,.jpg,.jpeg,.webp" multiple required><br><br>
         <input type='submit' value='Add Product'/>
     </form>
 {% endblock body %}
