@@ -4,4 +4,4 @@ from Authentication.decorators import role_required
 
 @role_required('customer')
 def home(request:HttpRequest):
-    return HttpResponse('Customer Home Page')
+    return render(request, 'customer/home.html')
