@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import *
 from Authentication.decorators import role_required
 from django.contrib import messages
-from .models import Product
+from .models import Product, Category
 
 @role_required('farmer')
 def farmer_home(request:HttpRequest):
@@ -16,10 +16,13 @@ def add_product(request):
         product_name = request.POST.get('product_name')
         product_desc = request.POST.get('product_desc')
         product_measure_unit = request.POST.get('product_measure_unit')
+        product_category = request.POST.get('product_category')
         product_quantity = request.POST.get('product_quantity')
         product_price = request.POST.get('product_price')
+        # get the category instance
+        category = Category.objects.get(name = product_category)
         # create the prodct object and save
-        product = Product.objects.create(user=request.user,name=product_name,description=product_desc,
+        product = Product.objects.create(user=request.user,category=category,name=product_name,description=product_desc,
             measure_unit=product_measure_unit,quantity=product_quantity,price=product_price)
         product.save()
         # add the success message
@@ -38,5 +41,5 @@ def all_products(request):
 @role_required('farmer')
 def product_details(request,id):
     product = Product.objects.get(id=id)
-    context ={'product':product}
+    context = {'product':product}
     return render(request, 'farmer/product-details.html',context)
