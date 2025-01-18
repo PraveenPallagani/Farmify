@@ -1,16 +1,16 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect,render
 from django.http import *
 from Authentication.decorators import role_required
 from django.contrib import messages
 
-@role_required('customer','farmer')
+@role_required('customer','farmer', 'admin')
 def home(request:HttpRequest):
     if request.user.role =='farmer':
         return redirect('Farmer Home')
     elif request.user.role == 'customer':
         return redirect('Customer Home')
     else:
-        return HttpResponse("This is not expected from the home route")
+        return render(request, 'farmify/practice.html')
 
 @role_required('customer','farmer')  
 def handle_404(request,exception):
