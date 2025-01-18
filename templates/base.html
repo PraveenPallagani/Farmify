@@ -3,13 +3,73 @@
   <head>
     <title>
         {% block title %}{% endblock title %}
-        
     </title>
+    <script src="https://cdn.tailwindcss.com"></script>
     {% block style %}{% endblock style %}
   </head>
   <body>
-    <div>
-    {% block body %}{% endblock body %}
+    <div class="block w-full">
+
+      {% comment %} top nav bar {% endcomment %}
+      <div class="nav py-2 bg-green-900 text-white w-full flex justify-center">
+        <div class="w-2/3 flex justify-between items-center">
+          <div class="flex items-center">
+            <img src="{% static 'farmer/images/farmer.jpg' %}" alt="Img" class="w-12 rounded-full mr-4" />
+            {% if user.role == 'customer' %}
+              <h1 class="text-xl font-semibold text-gray-100">Farmify Customer Dashboard</h1>
+            {% elif user.role == 'farmer' %}
+              <h1 class="text-xl font-semibold text-gray-100">Farmify Farmer Dashboard</h1>
+            {% else %}
+              <h1 class="text-xl font-semibold text-gray-100">Farmify Dashboard</h1>
+            {% endif %}
+          </div>
+          {% if user.is_authenticated %}
+            <a href="/auth/signout">
+              <div class="border-solid border-2 border-white-600 px-4 py-2 rounded-full text-xl font-bold text-green-900 bg-white cursor-pointer">
+              {{user.first_name.0}}
+              </div>
+            </a>
+          {% else %}
+          <a href="/auth/signout">
+            <div class="border-solid border-2 border-white-600 p-2 rounded-full text-xl font-bold text-green-900 bg-white cursor-pointer">
+              <img class="w-7 text-green-900" src="https://img.icons8.com/ios-filled/50/login-rounded-right.png" alt="login-rounded-right"/>
+            </div>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+
+
+      {% comment %} container {% endcomment %}
+      <div class="main-container w-full flex justify-center py-2">
+        
+        
+          <div class="w-2/3 flex">
+            {% if user.is_authenticated %}
+
+              {% comment %} side nav bar {% endcomment %}
+              <div class="side-nav border-solid ring-1 w-1/4 p-1 m-1 rounded-md bg-white shadow-lg  ring-black/5">
+                {% for key, value in options.items %}
+                <a href="{{value}}">
+                  <div class="side-nav-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    {{key}}
+                  </div>
+                </a>
+                {% endfor %}
+              </div>
+
+            {% endif %}
+
+            {% comment %} main content {% endcomment %}
+            <div class="main-content border-solid ring-1
+            {% if user.is_authenticated %}w-3/4{% else %}w-full{% endif %}
+            p-1 m-1 rounded-md bg-white shadow-lg  ring-black/5">
+              {% block body %}{% endblock body %}
+            </div>            
+          </div>
+        
+      </div>
+    
     </div>
     {% block js %}{% endblock js %}
   </body>

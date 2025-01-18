@@ -4,6 +4,8 @@ from django.db.models import Q
 from Authentication.decorators import role_required
 from Farmer.models import Product, Category
 
+options = {'Home': '/customer/home'}
+
 @role_required('customer')
 def home(request:HttpRequest):
     products = None
@@ -23,5 +25,5 @@ def home(request:HttpRequest):
         )
     else:
         products = Product.objects.all()
-    context = {'products': products, 'categories': categories}
+    context = {'products': products, 'categories': categories, 'options': options}
     return render(request, 'customer/home.html', context)

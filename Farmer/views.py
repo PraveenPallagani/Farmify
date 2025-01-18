@@ -4,13 +4,17 @@ from Authentication.decorators import role_required
 from django.contrib import messages
 from .models import Product, Category, ProductImage
 
+options = {'Home': '/farmer/home', 'All products': '/farmer/all-products', 'Add new product': '/farmer/add-product'}
+
 @role_required('farmer')
 def farmer_home(request:HttpRequest):
-    return render(request,'farmer/home.html')
+    context = {'options':options}
+    return render(request,'farmer/home.html', context)
 
 
 @role_required('farmer')
 def add_product(request):
+    context = {'options':options}
     # handle the form data and create the product
     if request.method == 'POST':
         product_name = request.POST.get('product_name')
@@ -36,20 +40,20 @@ def add_product(request):
         # add the success message
         messages.success(request, f"{product} is created successfully by {request.user}")
     # serve the add product form
-    return render(request,'farmer/add-product.html')
+    return render(request,'farmer/add-product.html', context)
 
 
 @role_required('farmer')
 def all_products(request):
     products = Product.objects.all()
-    context = {'products':products}
+    context = {'options':options, 'products':products}
     print(products)
     return render(request,'farmer/all-products.html',context)
 
 @role_required('farmer')
 def product_details(request,id):
     product = Product.objects.get(id=id)
-    context = {'product':product}
+    context = {'options':options, 'product':product}
     return render(request, 'farmer/product-details.html',context)
 
 

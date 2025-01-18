@@ -1,0 +1,11 @@
+Admin Account: 
+6300879033 - phone number
+Naveen - password
+
+Farmer Account: 
+9381238244 - phone number
+Praveen - password
+
+Customer Account: 
+9989865540 - phone number
+Srinivas - password
