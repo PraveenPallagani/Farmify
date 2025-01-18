@@ -61,7 +61,7 @@
             {% endif %}
 
             {% comment %} main content {% endcomment %}
-            <div class="main-content border-solid ring-1
+            <div class="main-content ring-1
             {% if user.is_authenticated %}w-3/4{% else %}w-full{% endif %}
             p-1 m-1 rounded-md bg-white shadow-lg  ring-black/5">
               {% block body %}{% endblock body %}
