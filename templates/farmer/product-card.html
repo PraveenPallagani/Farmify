@@ -1,6 +1,8 @@
 <div class="product-card ring-1 ring-black/5 rounded-md shadow-lg">
-    <div class="product-img h-[160px] overflow-hidden">
+    <a href="/farmer/product-details/{{product.id}}">
+        <div class="product-img h-[160px] overflow-hidden">
         <img src="{{product.images.all.0.image.url}}"/>
+    </a>
     </div>
     <div class="product-desc bg-gray-100 p-2 relative">
         <div class="card-icons absolute top-5 right-3 flex">
@@ -13,7 +15,7 @@
                 <img src="https://img.icons8.com/?size=100&id=99971&format=png&color=FA5252" class="w-4 cursor-pointer" onClick="document.getElementById('delete-product').submit()"/>
             </form>
         </div>
-        <h1 class="text-2xl font-bold text-green-700">{{product.name}}</h1>
+        <h1 class="text-2xl font-bold text-green-700"><a href="/farmer/product-details/{{product.id}}">{{product.name}}</a></h1>
         <p class="text-gray-500 text-xs">About: {{product.description}}</p>
         <p class="text-gray-500 text-xs font-bold">Available Quantity: {{product.quantity}} {{product.measure_unit}}</p>
         <p class="text-gray-500 text-xs font-bold">Price: {{product.price}} /-</p>
