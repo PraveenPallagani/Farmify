@@ -4,8 +4,14 @@
     </div>
     <div class="product-desc bg-gray-100 p-2 relative">
         <div class="card-icons absolute top-5 right-3 flex">
-            <img src="https://img.icons8.com/?size=100&id=86374&format=png&color=228BE6" class="w-4 mr-2 cursor-pointer"/>
-            <img src="https://img.icons8.com/?size=100&id=99971&format=png&color=FA5252" class="w-4 cursor-pointer"/>
+            <form id='ecit-product'>
+                <img src="https://img.icons8.com/?size=100&id=86374&format=png&color=228BE6" class="w-4 mr-2 cursor-pointer"/>
+            </form>
+            <form method="POST" action="/farmer/product-details/{{product.id}}" id='delete-product'>
+                {% csrf_token %}
+                <input type="hidden" name="_method" value="DELETE">
+                <img src="https://img.icons8.com/?size=100&id=99971&format=png&color=FA5252" class="w-4 cursor-pointer" onClick="document.getElementById('delete-product').submit()"/>
+            </form>
         </div>
         <h1 class="text-2xl font-bold text-green-700">{{product.name}}</h1>
         <p class="text-gray-500 text-xs">About: {{product.description}}</p>

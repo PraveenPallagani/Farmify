@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import *
 from Authentication.decorators import role_required
 from django.contrib import messages
 from .models import Product, Category, ProductImage
+import os
 
 options = {'Home': '/farmer/home', 'All products': '/farmer/all-products', 'Add new product': '/farmer/add-product'}
 
@@ -39,6 +40,7 @@ def add_product(request):
             product_image.save()
         # add the success message
         messages.success(request, f"{product} is created successfully by {request.user}")
+        return redirect('All Products')
     # serve the add product form
     return render(request,'farmer/add-product.html', context)
 
@@ -51,8 +53,19 @@ def all_products(request):
     return render(request,'farmer/all-products.html',context)
 
 @role_required('farmer')
-def product_details(request,id):
-    product = Product.objects.get(id=id)
+def product_details(request:HttpRequest,id):
+    product = get_object_or_404(Product, id=id)
+    if request.method == 'POST' and request.POST.get('_method') == 'DELETE':
+        # delete images of the product
+        images = product.images.all()
+        for img in images:
+            if os.path.isfile(img.image.path):
+                os.remove(img.image.path)
+        # then delete the product
+        product.delete()
+        messages.info(request, f'Product {product.name} is deleted successfully by {request.user}')
+        return redirect('All Products')
+    
     context = {'options':options, 'product':product}
     return render(request, 'farmer/product-details.html',context)
 
