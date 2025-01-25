@@ -1,0 +1,21 @@
+<div class="product-card ring-1 ring-black/5 rounded-md shadow-lg">
+    <div class="product-img h-[160px] overflow-hidden">
+        <img src="{{product.images.all.0.image.url}}"/>
+    </div>
+    <div class="product-desc bg-gray-100 p-2 relative">
+        <div class="card-icons absolute top-5 right-3 flex">
+            <img src="https://img.icons8.com/?size=100&id=86374&format=png&color=228BE6" class="w-4 mr-2 cursor-pointer"/>
+            <img src="https://img.icons8.com/?size=100&id=99971&format=png&color=FA5252" class="w-4 cursor-pointer"/>
+        </div>
+        <h1 class="text-2xl font-bold text-green-700">{{product.name}}</h1>
+        <p class="text-gray-500 text-xs">About: {{product.description}}</p>
+        <p class="text-gray-500 text-xs font-bold">Available Quantity: {{product.quantity}} {{product.measure_unit}}</p>
+        <p class="text-gray-500 text-xs font-bold">Price: {{product.price}} /-</p>
+        {% if product.updated_at %}
+            <p class="text-gray-500 text-xs">Last Updated On: {{product.updated_at}}</p>
+        {% else %}
+            <p class="text-gray-500 text-xs">Created On: {{product.created_at}}</p>
+        {% endif %}
+
+    </div>
+</div>
