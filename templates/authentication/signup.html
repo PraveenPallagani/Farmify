@@ -5,12 +5,6 @@
 
 {% block body %}
     <div>
-        {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                {{ message }}
-            </li>
-        {% endfor %}
-
         <div class="w-fill flex justify-center">
             <div class="w-2/3 h-full">
                 <img class="h-full w-full" src="{% static 'farmify/images/signin-pic.webp' %}" alt="SignUp Side Image"/>
