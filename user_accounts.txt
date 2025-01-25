@@ -9,3 +9,7 @@ Praveen - password
 Customer Account: 
 9989865540 - phone number
 Srinivas - password
+
+Customer Account: 
+7981305346 - phone number
+Subhashini - password
