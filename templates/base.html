@@ -4,11 +4,14 @@
     <title>
         {% block title %}{% endblock title %}
     </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+
     {% block style %}{% endblock style %}
   </head>
   <body>
-    <div class="block w-full">
+    <div class="block w-full">  
 
       {% comment %} top nav bar {% endcomment %}
       <div class="nav py-2 bg-green-900 text-white w-full flex justify-center">
@@ -41,7 +44,17 @@
 
 
       {% comment %} container {% endcomment %}
-      <div class="main-container w-full flex justify-center py-2">
+      <div class="main-container w-full flex justify-center py-2 relative">
+
+        {% if messages %}
+        <div class="flex flex-col absolute right-4 top-2">
+          {% for message in messages %}
+          <div id="message-{{forloop.counter}}" class="mb-2 ring-1 px-4 py-2 rounded-md shadow-xl ring-black/5 bg-green-600 text-white flex justify-center items-center" onClick="document.getElementById('message-{{forloop.counter}}').remove()">
+            <p>{{message}}</p> &nbsp; &nbsp;<img class="w-4 mt-1 cursor-pointer" src="https://img.icons8.com/?size=100&id=79023&format=png&color=FFFFFF" alt="login-rounded-right"/> 
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
         
         
           <div class="w-2/3 flex">
@@ -50,18 +63,18 @@
               {% comment %} side nav bar {% endcomment %}
               <div class="side-nav border-solid ring-1 w-1/4 p-1 m-1 rounded-md bg-white shadow-lg  ring-black/5">
                 {% for key, value in options.items %}
-                <a href="{{value}}">
+                <a href="{{value}}" >
                   <div class="side-nav-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                     {{key}}
                   </div>
-                </a>
+                </a>             
                 {% endfor %}
               </div>
 
             {% endif %}
 
             {% comment %} main content {% endcomment %}
-            <div class="main-content border-solid ring-1
+            <div class="main-content ring-1
             {% if user.is_authenticated %}w-3/4{% else %}w-full{% endif %}
             p-1 m-1 rounded-md bg-white shadow-lg  ring-black/5">
               {% block body %}{% endblock body %}
