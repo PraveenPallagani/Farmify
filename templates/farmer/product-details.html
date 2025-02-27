@@ -6,23 +6,81 @@
 
 {% block body %}
     {% comment "All messages setion" %}{% endcomment %}
-    {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-            {{ message }}
-        </li>
-    {% endfor %}
 
     {% comment "Product Details" %}{% endcomment %}
-    <h3>Product details of {{product.name}}</h3>
-    <div>
-        {% for image in product.images.all %}
-            <img src="{{ image.image.url }}" alt="{{ product.name }}" width="200">
-        {% endfor %}<br/>
-        <span>Product Name:</span> <span>{{product.name}}</span><br/>
-        <span>Product Description:</span> <span>{{product.description}}</span><br/>
-        <span>Product Measuring Unit:</span> <span>{{product.measure_unit}}</span><br/>
-        <span>Product Quantity:</span> <span>{{product.quantity}}</span><br/>
-        <span>Product Price:</span> <span>{{product.price}}</span><br/>
-        <span>Product Category:</span> <span>{{product.category}}</span><br/>
+    
+    <div class="mx-3  mt-3">
+        <div class="relative">
+            <h3 class="text-lg font-bold text-green-700">Product details of {{product.name}}</h3>
+            <div class="card-icons absolute top-0 right-2 flex items-center my-1">
+                <form id='edit-product'>
+                    <img src="https://img.icons8.com/?size=100&id=86374&format=png&color=228BE6" class="w-5 mr-2 cursor-pointer"/>
+                </form>
+                <form method="POST" action="/farmer/product-details/{{product.id}}" id='delete-product'>
+                    {% csrf_token %}
+                    <input type="hidden" name="_method" value="DELETE">
+                    <img src="https://img.icons8.com/?size=100&id=99971&format=png&color=FA5252" class="w-5 cursor-pointer" onClick="document.getElementById('delete-product').submit()"/>
+                </form>
+            </div>
+        </div>
+        <hr class='mt-2'/>
+        <div class='flex justify-center items-center flex-col'>
+            <div class="swiper w-1/2 m-4">
+                <div class="swiper-wrapper h-auto">
+                    {% for image in product.images.all %}
+                    <div class="swiper-slide flex justify-center">
+                        <img src="{{ image.image.url }}" alt="{{ product.name }}" width="200">
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-next text-green-700"></div>
+                <div class="swiper-button-prev text-green-700"></div>
+                <div class="swiper-pagination text-green-700"></div>
+            </div>
+            <div class="w-full my-4 bg-green-100 p-2 border ">
+                <h3 class="text-lg text-green-900">Details section</h3>
+                <hr />
+                <table>
+                    <tr>
+                        <td><span class="text-md text-gray-500">Product Name</span></td>
+                        <td><span class="text-lg text-gray-700 ml-3">{{product.name}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><span  class="text-md text-gray-500">Product Description</span></td>
+                        <td><span  class="text-lg text-gray-700 ml-3">{{product.description}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="text-md text-gray-500">Product Measuring Unit</span></td>
+                        <td><span class="text-lg text-gray-700 ml-3">{{product.measure_unit}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="text-md text-gray-500">Product Quantity</span></td>
+                        <td><span class="text-lg text-gray-700 ml-3">{{product.quantity}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="text-md text-gray-500">Product Price</span></td>
+                        <td><span class="text-lg text-gray-700 ml-3">{{product.price}}</span></td>
+                    </tr> 
+                    <tr>
+                        <td><span class="text-md text-gray-500">Product Category</span></td>
+                        <td><span class="text-lg text-gray-700 ml-3">{{product.category}}</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 {% endblock body %}
+
+{% block js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            new Swiper('.swiper', {
+                    loop: true,
+                    autoplay: {delay: 2000},
+                    navigation: {nextEl : '.swiper-button-next', prevEl: '.swiper-button-prev'},
+                    pagination: {el: '.swiper-pagination', clickable: true}
+                });
+        });
+    </script>
+
+{% endblock js %}
