@@ -6,13 +6,14 @@
     </div>
     <div class="product-desc bg-gray-100 p-2 relative">
         <div class="card-icons absolute top-5 right-3 flex">
-            <form id='edit-product'>
-                <img src="https://img.icons8.com/?size=100&id=86374&format=png&color=228BE6" class="w-4 mr-2 cursor-pointer"/>
+            <form method="POST" action="/farmer/update-product/{{product.id}}" id='edit-product-{{product.id}}'>
+                {% csrf_token %}
+                <img src="https://img.icons8.com/?size=100&id=86374&format=png&color=228BE6" class="w-4 mr-2 cursor-pointer" onClick="document.getElementById('edit-product-{{product.id}}').submit()"/>
             </form>
-            <form method="POST" action="/farmer/product-details/{{product.id}}" id='delete-product'>
+            <form method="POST" action="/farmer/product-details/{{product.id}}" id='delete-product-{{product.id}}'>
                 {% csrf_token %}
                 <input type="hidden" name="_method" value="DELETE">
-                <img src="https://img.icons8.com/?size=100&id=99971&format=png&color=FA5252" class="w-4 cursor-pointer" onClick="document.getElementById('delete-product').submit()"/>
+                <img src="https://img.icons8.com/?size=100&id=99971&format=png&color=FA5252" class="w-4 cursor-pointer" onClick="document.getElementById('delete-product-{{product.id}}').submit()"/>
             </form>
         </div>
         <h1 class="text-2xl font-bold text-green-700"><a href="/farmer/product-details/{{product.id}}">{{product.name}}</a></h1>

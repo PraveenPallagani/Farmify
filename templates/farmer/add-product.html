@@ -1,34 +1,82 @@
 {% extends "../base.html" %}
 
 {% block title %}
-    Add Produt
+    {% if product %}
+        Update Product
+    {% else %}
+        Add Produt
+    {% endif %}
 {% endblock title %}
 
 {% block body %}
 
     {% comment "Form to add product" %}{% endcomment %}
     <div class="form-group mx-3">
-        <h3 class="text-xl font-bold text-green-700 mt-2">Add New Product</h3>
+        <h3 class="text-xl font-bold text-green-700 mt-2">
+            {% if product %}
+                Update Product
+            {% else %}
+                Add New Product
+            {% endif %}
+        </h3>
         <hr class="mt-1"/>
+
+        {% if product %}
+        <form method="POST" id="delete-image">
+            {% csrf_token %}
+            <input type="hidden" name="_method" value="DELETE_IMAGE">
+            <input type="hidden" name="_image" id="_image" value="EMPTY">
+            <div class="swiper w-1/2 my-4 w-full">
+                <div class="swiper-wrapper h-auto">
+                    {% for image in product.images.all %}
+                    <div class="swiper-slide flex justify-center relative">
+                        <img src="{{ image.image.url }}" alt="{{ product.name }}" width="200"/>
+                        <div class="absolute right-0 top-0 bg-gray-300 flex px-2 py-1 rounded-md cursor-pointer" onClick="deleteImage({{image.id}})">
+                            <img src="https://img.icons8.com/?size=100&id=99971&format=png&color=FA5252" class="w-5 cursor-pointer"/>
+                            <small>Delete Image</small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-next text-green-700"></div>
+                <div class="swiper-button-prev text-green-700"></div>
+                <div class="swiper-pagination text-green-700"></div>
+            </div>
+        </form>
+        {% endif %}
+
+
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            {% if product %}
+                <input type="hidden" name="_method" value="UPDATE">
+            {% endif %}
             <table class="w-full mt-2">
                 <tr>
                     <td><label for="product_name" class="text-md text-gray-500">Product Name</label></td>
                     <td><input type='text' name="product_name" placeholder="Enter Product Name...." 
+                        {% if product %}
+                            value='{{product.name}}'
+                        {% endif %}
                     class="placeholder:text-gray-500 placeholder:italic bg-green-100 px-2 py-1 w-3/4 focus:outline-none" required/></td>
                 </tr>
                 <tr>
                     <td><label for="product_desc" class="text-md text-gray-500 mt-2">Product Description</label></td>
                     <td><textarea name="product_desc" rows="4" cols="50" placeholder="Enter Product Description" 
-                    class="placeholder:text-gray-500 placeholder:italic mt-2 bg-green-100 px-2 py-1 w-3/4 focus:outline-none" required></textarea></td>
+                    class="placeholder:text-gray-500 placeholder:italic mt-2 bg-green-100 px-2 py-1 w-3/4 focus:outline-none" required>{% if product %}{{product.description}}{% endif %}</textarea></td>
                 </tr>
                 <tr>
                     <td><label for="product_measure_unit" class="text-md text-gray-500 mt-2">Product Measure Unit</label></td>
                     <td>
                         <select name="product_measure_unit" class="mt-2 bg-green-100 px-2 py-1 w-3/4 focus:outline-none">
-                            <option value="kgs">Kilograms</option>
-                            <option value="ltrs">Liters</option>
+                            <option value="kgs"
+                                {% if product and product.measure_unit == 'kgs' %} selected {% endif %}>
+                                Kilograms
+                            </option>
+                            <option value="ltrs"
+                                {% if product and product.measure_unit == 'ltrs' %} selected {% endif %}>
+                                Liters
+                            </option>
                         </select>
                     </td>
                 </tr>
@@ -36,28 +84,65 @@
                     <td><label for="product_category" class="text-md text-gray-500 mt-2">Product Category</label></td>
                     <td>
                         <select name="product_category" class="mt-2 bg-green-100 px-2 py-1 w-3/4 focus:outline-none">
-                            <option value="vegetables">Vegetables</option>
-                            <option value="fruits">Fruits</option>
+                            <option value="vegetables"
+                                {% if product and product.category.name == 'vegetables' %} selected {% endif %}>
+                                Vegetables
+                            </option>
+                            <option value="fruits"
+                                {% if product and product.category.name == 'fruits' %} selected {% endif %}>
+                                Fruits
+                            </option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td><label for="product_quantity" class="text-md text-gray-500 mt-2">Product Quantity</label></td>
                     <td><input type='number' name="product_quantity" min="0" placeholder="Enter Product Quantity...." 
+                        {% if product %}
+                            value='{{product.quantity}}'
+                        {% endif %}
                     class="placeholder:text-gray-500 placeholder:italic mt-2 bg-green-100 px-2 py-1 w-3/4 focus:outline-none" required/></td>
                 </tr>
                 <tr>
                     <td><label for="product_price" class="text-md text-gray-500 mt-2">Product Price</label></td>
                     <td><input type='number' name="product_price" min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" placeholder="Enter Product Price...." 
+                        {% if product %}
+                            value='{{product.price}}'
+                        {% endif %}
                     class="placeholder:text-gray-500 placeholder:italic mt-2 bg-green-100 px-2 py-1 w-3/4 focus:outline-none" required/></td>
                 </tr>
                 <tr>
                     <td><label for="images" class="text-md text-gray-500 mt-2">Product Images (Max 5):</label></td>
-                    <td><input type="file" name="images" class="mt-2 bg-green-100 px-2 py-1 w-3/4 focus:outline-none" accept=".png,.jpg,.jpeg,.webp" multiple required></td>
+                    <td><input type="file" name="images" class="mt-2 bg-green-100 px-2 py-1 w-3/4 focus:outline-none" accept=".png,.jpg,.jpeg,.webp" 
+                        multiple></td>
                 </tr>
-                <tr></tr>
-                <tr><td><input type='submit' value='Add Product' class="bg-green-700 px-2 py-1 rounded-md text-white mt-2 cursor-pointer"/></td></tr>
+                <tr><td><input type='submit' 
+                    {% if product %}
+                    value='Update Product'
+                    {% else %}
+                    value='Add Product'
+                    {% endif %}
+                    class="bg-green-700 px-2 py-1 rounded-md text-white mt-2 cursor-pointer"/></td></tr>
             </table>
         </form>
-    </div
+    </div>
 {% endblock body %}
+
+{% block js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        new Swiper('.swiper', {
+                loop: true,
+                autoplay: {delay: 2000},
+                navigation: {nextEl : '.swiper-button-next', prevEl: '.swiper-button-prev'},
+                pagination: {el: '.swiper-pagination', clickable: true}
+            });
+    });
+
+    function deleteImage(id) {
+        console.log(id);
+        document.getElementById('_image').value = id;
+        document.getElementById('delete-image').submit();
+    }
+</script>
+{% endblock js %}
