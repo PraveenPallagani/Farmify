@@ -35,11 +35,23 @@ def add_product(request:HttpRequest):
 
 
 def update_product(request: HttpRequest, product_id:int):
+    product = get_object_or_404(Product, id=product_id)
     if request.POST.get('_method') == 'DELETE_IMAGE':
         delete_image(request)
     elif request.POST.get('_method') == 'UPDATE':
-        pass
-    product = get_object_or_404(Product, id=product_id)
+        product.name = request.POST.get('product_name', product.name)
+        product.description = request.POST.get('product_desc', product.description)
+        product.measure_unit = request.POST.get('product_measure_unit', product.measure_unit)
+        product.category = category = Category.objects.get(name = request.POST.get('product_category', product.category.name))
+        product.quantity = request.POST.get('product_quantity', product.quantity)
+        product.price = request.POST.get('product_price', product.price)
+        images = request.FILES.getlist('images')
+        for image in images:
+            product_image = ProductImage.objects.create(product=product, image=image)
+            product_image.save()
+        product.save()
+        messages.success(request, f"{product} is updated successfully by {request.user}")
+        return redirect('Product Details', id=product.id)
     context = {'product': product, 'options': options}
     return render(request, 'farmer/add-product.html', context)
 
